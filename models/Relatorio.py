@@ -61,8 +61,29 @@ def get_id(self):
     def to_json(self):
         return {
             "id": self.__id,
-            "data": self.__data.strftime("%Y-%m-%d"),
+            "data": self.__data.strftime(%Y-%m-%d %H:%M"),
             "id_cliente": self.__id_cliente,
             "id_servico": self.__id_servico,
             "descricao": self.__descricao
         }
+
+class Relatorios(Modelo):
+
+    @classmethod
+    def abrir(cls):
+        cls.objetos = []
+        try:
+            with open("relatorios.json", mode="r") as arquivo:
+                dados = json.load(arquivo)
+                for dic in dados:
+                    data = datetime.strptime(dic["data"], "%d/%m/%Y %H:%M")
+                    obj = Relatorio(dic["id"], data, dic["id_cliente"], dic["id_servico"], dic["descricao"])
+                    cls.objetos.append(obj)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
+    @classmethod
+    def salvar(cls):
+        with open("relatorios.json", mode="w") as arquivo:
+            json.dump([r.to_json() for r in cls.objetos], arquivo, indent=4)
+            
