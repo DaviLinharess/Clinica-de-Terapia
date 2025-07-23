@@ -9,7 +9,7 @@ class Cliente:
         self.__fone = fone
  
 
-        def set_id(self, id):
+    def set_id(self, id):
         if (id == ""):
             raise ValueError("ID não pode estar vazio")
         self.__id = id
