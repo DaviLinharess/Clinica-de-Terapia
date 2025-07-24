@@ -1,4 +1,5 @@
 import json
+from models.modelo import Modelo
 
 class Cliente:
     def __init__(self, id, nome, email, telefone, senha):
